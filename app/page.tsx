@@ -1,19 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
 import {
   ArrowRight,
   BarChart3,
   BookOpen,
-  Brain,
   Check,
+  CheckSquare,
   ChevronDown,
-  CircleDollarSign,
   LineChart,
   ShieldCheck,
-  Target,
+  UserRound,
   X,
 } from "lucide-react";
+
 import { useRouter } from "next/navigation";
 
 const problems = [
@@ -44,37 +45,37 @@ const learningAreas = [
     title: "Market Fundamentals",
     description:
       "Understand market terminology, instruments and trading basics.",
-    icon: <BarChart3 size={26} />,
+    icon: <BarChart3 size={38} strokeWidth={1.8} />,
   },
   {
     title: "Technical Analysis",
     description:
       "Explore charts, price action, trends and technical indicators.",
-    icon: <LineChart size={26} />,
+    icon: <LineChart size={38} strokeWidth={1.8} />,
   },
   {
     title: "Trade Planning",
     description:
       "Understand how traders assess entries, exits and potential risk.",
-    icon: <Target size={26} />,
+    icon: <CheckSquare size={38} strokeWidth={1.8} />,
   },
   {
     title: "Risk Management",
     description:
       "Learn why position sizing, stop-loss planning and capital protection matter.",
-    icon: <ShieldCheck size={26} />,
+    icon: <ShieldCheck size={38} strokeWidth={1.8} />,
   },
   {
     title: "Trading Psychology",
     description:
       "Recognise emotional biases and the importance of consistency.",
-    icon: <Brain size={26} />,
+    icon: <UserRound size={38} strokeWidth={1.8} />,
   },
   {
     title: "Market Analysis",
     description:
       "Develop a framework for interpreting market information before making decisions.",
-    icon: <BookOpen size={26} />,
+    icon: <BookOpen size={38} strokeWidth={1.8} />,
   },
 ];
 
@@ -107,8 +108,15 @@ export default function Home() {
   const [showForm, setShowForm] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  // POPUP AFTER 5 SECONDS
   useEffect(() => {
+    const hasSubmittedForm = localStorage.getItem(
+      "mehta-insights-form-submitted"
+    );
+
+    if (hasSubmittedForm === "true") {
+      return;
+    }
+
     const timer = setTimeout(() => {
       setShowForm(true);
     }, 5000);
@@ -116,9 +124,15 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  // FORM SUBMIT
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    localStorage.setItem(
+      "mehta-insights-form-submitted",
+      "true"
+    );
+
+    setShowForm(false);
 
     router.push("/thank-you");
   };
@@ -126,14 +140,11 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#F3F7FC] text-[#092252]">
 
-      {/* =====================================================
-          HEADER
-      ===================================================== */}
+      {/* HEADER */}
       <header className="sticky top-0 z-40 h-[82px] border-b border-[#DCE7F3] bg-[#F3F7FC]/95 backdrop-blur-md">
 
         <div className="mx-auto flex h-full max-w-[1400px] items-center justify-between px-6 lg:px-10">
 
-          {/* LOGO */}
           <a href="#" className="flex items-center">
             <img
               src="/logo.png"
@@ -142,7 +153,6 @@ export default function Home() {
             />
           </a>
 
-          {/* DESKTOP NAV */}
           <nav className="hidden items-center gap-8 lg:flex">
 
             <a
@@ -175,7 +185,6 @@ export default function Home() {
 
           </nav>
 
-          {/* MOBILE BUTTON */}
           <button
             onClick={() => setShowForm(true)}
             className="rounded-xl bg-[#1769D1] px-5 py-3 text-sm font-bold text-white lg:hidden"
@@ -187,18 +196,13 @@ export default function Home() {
 
       </header>
 
-
-      {/* =====================================================
-          HERO
-      ===================================================== */}
+      {/* HERO */}
       <section className="bg-[#F3F7FC]">
 
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 items-start gap-5 px-6 pb-14 pt-10 lg:grid-cols-[1.05fr_0.95fr] lg:px-10 lg:pt-10">
 
-          {/* LEFT */}
           <div className="relative z-10 pt-2">
 
-            {/* SMALL LABEL */}
             <div className="mb-7 inline-flex items-center gap-3 rounded-full border border-[#BCD7F5] bg-[#F3F7FC] px-6 py-3.5">
 
               <span className="h-3 w-3 rounded-full bg-[#1769D1]" />
@@ -209,64 +213,33 @@ export default function Home() {
 
             </div>
 
-
-            {/* HEADLINE */}
             <h1 className="max-w-[720px] text-[48px] font-black leading-[1.02] tracking-[-0.035em] text-[#092252] sm:text-[56px] lg:text-[62px] xl:text-[68px]">
-
               Master Trading with 16-Week Live-Mentored Program
-
             </h1>
 
-
-            {/* DESCRIPTION */}
             <p className="mt-6 max-w-[650px] text-[17px] leading-7 text-[#52627A] sm:text-[18px]">
-
               Build your understanding of the markets through a 16-week
               live-mentored trading program designed to help you develop
               analytical skills, trading discipline and a more structured
               approach to market decisions.
-
             </p>
 
-
-            {/* CTA */}
             <div className="mt-7 flex flex-wrap gap-4">
 
               <button
                 onClick={() => setShowForm(true)}
                 className="inline-flex items-center gap-3 rounded-xl bg-[#1769D1] px-6 py-4 text-[16px] font-bold text-white shadow-[0_10px_25px_rgba(23,105,209,0.2)] transition hover:bg-[#0D58B7]"
               >
-
                 Explore the Program | Talk to a Mentor
-
                 <ArrowRight size={19} />
-
               </button>
-
-            </div>
-
-
-            {/* TRUST BAR */}
-            <div className="mt-7 max-w-[680px] border-l-4 border-[#1769D1] pl-4">
-
-              <p className="text-[14px] font-semibold leading-6 text-[#52627A]">
-
-                Led by Ankit Mehta, CMT, CFTe, QPFP | SEBI Registered Research
-                Analyst (INH000025577)
-
-              </p>
 
             </div>
 
           </div>
 
+          <div className="relative flex flex-col items-center lg:items-end">
 
-          {/* =================================================
-              ANKIT MEHTA PHOTO
-          ================================================= */}
-          <div className="relative flex min-h-[470px] items-start justify-center lg:min-h-[540px] lg:justify-end">
-
-            {/* SAME BACKGROUND COLOR */}
             <div className="absolute inset-0 bg-[#F3F7FC]" />
 
             <img
@@ -275,16 +248,32 @@ export default function Home() {
               className="relative z-10 mt-[-5px] h-auto w-[430px] object-contain object-top sm:w-[500px] lg:mt-[-18px] lg:w-[555px] xl:w-[590px]"
             />
 
+            <div className="relative z-10 mt-2 w-full max-w-[590px] text-center">
+
+              <p className="text-[15px] leading-6 text-[#092252]">
+                <strong className="font-bold">
+                  Led by Ankit Mehta, CMT, CFTe, QPFP
+                </strong>
+              </p>
+
+              <p className="mt-1 text-[15px] leading-6 text-[#1769D1]">
+                <strong className="font-bold">
+                  SEBI Registered Research Analyst
+                </strong>{" "}
+                <span className="font-semibold">
+                  (INH000025577)
+                </span>
+              </p>
+
+            </div>
+
           </div>
 
         </div>
 
       </section>
 
-
-      {/* =====================================================
-          PROBLEM
-      ===================================================== */}
+      {/* PROBLEM */}
       <section
         id="program"
         className="border-t border-[#E2EAF3] bg-white py-16 lg:py-20"
@@ -311,9 +300,8 @@ export default function Home() {
 
           </div>
 
-
-          {/* TABLE */}
-          <div className="mt-10 overflow-hidden rounded-2xl border border-[#DCE7F3] bg-[#F3F7FC]">
+          {/* REDUCED TABLE WIDTH */}
+          <div className="mx-auto mt-10 max-w-[1050px] overflow-hidden rounded-2xl border border-[#DCE7F3] bg-[#F3F7FC]">
 
             {problems.map((item, index) => (
 
@@ -343,26 +331,23 @@ export default function Home() {
 
           </div>
 
+          <div className="mt-7 flex justify-center">
 
-          <button
-            onClick={() => setShowForm(true)}
-            className="mt-7 inline-flex items-center gap-3 rounded-xl bg-[#092252] px-6 py-3.5 text-[16px] font-bold text-white transition hover:bg-[#1769D1]"
-          >
+            <button
+              onClick={() => setShowForm(true)}
+              className="inline-flex items-center gap-3 rounded-xl bg-[#092252] px-6 py-3.5 text-[16px] font-bold text-white transition hover:bg-[#1769D1]"
+            >
+              Register for the 16 week Program
+              <ArrowRight size={19} />
+            </button>
 
-            Register for the 16 week Program
-
-            <ArrowRight size={19} />
-
-          </button>
+          </div>
 
         </div>
 
       </section>
 
-
-      {/* =====================================================
-          WHAT YOU WILL LEARN
-      ===================================================== */}
+      {/* WHAT YOU WILL LEARN */}
       <section className="bg-[#F3F7FC] py-16 lg:py-20">
 
         <div className="mx-auto max-w-[1250px] px-6 lg:px-10">
@@ -384,7 +369,6 @@ export default function Home() {
 
           </div>
 
-
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
 
             {learningAreas.map((item, index) => (
@@ -394,7 +378,7 @@ export default function Home() {
                 className="rounded-2xl border border-[#DCE7F3] bg-white p-6 shadow-[0_7px_22px_rgba(9,34,82,0.04)] transition hover:-translate-y-1"
               >
 
-                <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-[#E7F1FD] text-[#1769D1]">
+                <div className="mb-7 flex h-[48px] w-[48px] items-center justify-start text-[#1769D1]">
                   {item.icon}
                 </div>
 
@@ -412,26 +396,23 @@ export default function Home() {
 
           </div>
 
+          <div className="mt-8 flex justify-center">
 
-          <button
-            onClick={() => setShowForm(true)}
-            className="mt-8 inline-flex items-center gap-3 rounded-xl bg-[#1769D1] px-6 py-3.5 text-[16px] font-bold text-white transition hover:bg-[#0D58B7]"
-          >
+            <button
+              onClick={() => setShowForm(true)}
+              className="inline-flex items-center gap-3 rounded-xl bg-[#1769D1] px-6 py-3.5 text-[16px] font-bold text-white transition hover:bg-[#0D58B7]"
+            >
+              Get the Program Curriculum
+              <ArrowRight size={19} />
+            </button>
 
-            Get the Program Curriculum
-
-            <ArrowRight size={19} />
-
-          </button>
+          </div>
 
         </div>
 
       </section>
 
-
-      {/* =====================================================
-          WHY MEHTA INSIGHTS
-      ===================================================== */}
+      {/* WHY MEHTA INSIGHTS */}
       <section
         id="why-mehta"
         className="bg-white py-16 lg:py-20"
@@ -441,12 +422,10 @@ export default function Home() {
 
           <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
 
-
-            {/* DARK CARD */}
             <div className="rounded-[26px] bg-[#092252] p-7 text-white">
 
               <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-[#1769D1]">
-                <CircleDollarSign size={26} />
+                <BarChart3 size={26} />
               </div>
 
               <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#76B5FF]">
@@ -491,8 +470,6 @@ export default function Home() {
 
             </div>
 
-
-            {/* CONTENT */}
             <div>
 
               <p className="mb-3 text-sm font-extrabold uppercase tracking-[0.2em] text-[#1769D1]">
@@ -510,7 +487,6 @@ export default function Home() {
                 technical analysis, with an emphasis on transparency,
                 documented reasoning and informed decisions.
               </p>
-
 
               <div className="mt-7 space-y-3">
 
@@ -539,7 +515,6 @@ export default function Home() {
 
               </div>
 
-
               <p className="mt-7 text-[17px] leading-7 text-[#52627A]">
                 The program explains why more information doesn't automatically
                 lead to better decisions. It then walks you through a
@@ -547,16 +522,12 @@ export default function Home() {
                 There's no pressure. If the approach makes sense to you.
               </p>
 
-
               <button
                 onClick={() => setShowForm(true)}
                 className="mt-7 inline-flex items-center gap-3 rounded-xl bg-[#1769D1] px-6 py-3.5 text-[16px] font-bold text-white transition hover:bg-[#0D58B7]"
               >
-
                 Know More About Mehta Insights
-
                 <ArrowRight size={19} />
-
               </button>
 
             </div>
@@ -567,10 +538,7 @@ export default function Home() {
 
       </section>
 
-
-      {/* =====================================================
-          FAQ
-      ===================================================== */}
+      {/* FAQ */}
       <section
         id="faq"
         className="bg-[#F3F7FC] py-16 lg:py-20"
@@ -589,7 +557,6 @@ export default function Home() {
             </h2>
 
           </div>
-
 
           <div className="mt-10 space-y-3">
 
@@ -624,7 +591,6 @@ export default function Home() {
 
                   </button>
 
-
                   {isOpen && (
 
                     <div className="border-t border-[#E5ECF4] px-5 pb-5 pt-4">
@@ -649,54 +615,48 @@ export default function Home() {
 
       </section>
 
-
-      {/* =====================================================
-          FOOTER
-      ===================================================== */}
+      {/* FOOTER */}
       <footer className="bg-[#092252] px-6 py-8 text-white">
 
         <div className="mx-auto max-w-[1250px]">
 
-          <div className="flex flex-col items-center justify-between gap-5 border-b border-white/15 pb-6 md:flex-row">
+          <div className="grid items-center gap-8 border-b border-white/15 pb-6 md:grid-cols-[1fr_1.5fr_1fr]">
 
-            <img
-              src="/logo.png"
-              alt="Mehta Insights"
-              className="h-[48px] w-auto object-contain brightness-0 invert"
-            />
+            <div className="flex justify-center md:justify-start">
 
-            <p className="text-center text-xs text-[#C8D7EA] md:text-right">
+              <img
+                src="/footer-logo.png"
+                alt="Mehta Insights"
+                className="h-[70px] w-auto object-contain"
+              />
+
+            </div>
+
+            <p className="text-center text-xs leading-5 text-[#AFC0D8]">
+              Educational program. No promise or guarantee of returns. Market
+              investments involve risk. Investments in the securities market
+              are subject to market risks. Read all related documents carefully
+              before investing.
+            </p>
+
+            <p className="text-center text-xs leading-5 text-[#C8D7EA] md:text-right">
               MEHTA INSIGHTS | Chart to Trade | SEBI Reg. No. INH000025577 |
               BSE Enlistment 7060
             </p>
 
           </div>
 
-
-          <p className="mx-auto mt-6 max-w-[1000px] text-center text-xs leading-5 text-[#AFC0D8]">
-
-            Educational program. No promise or guarantee of returns. Market
-            investments involve risk. Investments in the securities market are
-            subject to market risks. Read all related documents carefully
-            before investing.
-
-          </p>
-
         </div>
 
       </footer>
 
-
-      {/* =====================================================
-          POPUP FORM
-      ===================================================== */}
+      {/* POPUP FORM */}
       {showForm && (
 
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#061631]/70 px-4 backdrop-blur-sm">
 
           <div className="relative max-h-[90vh] w-full max-w-[720px] overflow-y-auto rounded-[26px] bg-white p-7 shadow-2xl sm:p-9">
 
-            {/* CLOSE BUTTON */}
             <button
               type="button"
               onClick={() => setShowForm(false)}
@@ -706,8 +666,6 @@ export default function Home() {
               <X size={23} strokeWidth={2.5} />
             </button>
 
-
-            {/* FORM */}
             <div className="pr-8">
 
               <p className="text-sm font-extrabold uppercase tracking-[0.2em] text-[#1769D1]">
@@ -724,13 +682,11 @@ export default function Home() {
 
             </div>
 
-
             <form
               onSubmit={handleSubmit}
               className="mt-7 space-y-4"
             >
 
-              {/* NAME */}
               <input
                 required
                 name="name"
@@ -739,8 +695,6 @@ export default function Home() {
                 className="w-full rounded-xl border border-[#D6E0EB] bg-[#F8FAFC] px-5 py-4 text-[16px] text-[#092252] outline-none transition focus:border-[#1769D1]"
               />
 
-
-              {/* CONTACT */}
               <input
                 required
                 name="contact"
@@ -749,8 +703,6 @@ export default function Home() {
                 className="w-full rounded-xl border border-[#D6E0EB] bg-[#F8FAFC] px-5 py-4 text-[16px] text-[#092252] outline-none transition focus:border-[#1769D1]"
               />
 
-
-              {/* EMAIL */}
               <input
                 required
                 name="email"
@@ -759,8 +711,6 @@ export default function Home() {
                 className="w-full rounded-xl border border-[#D6E0EB] bg-[#F8FAFC] px-5 py-4 text-[16px] text-[#092252] outline-none transition focus:border-[#1769D1]"
               />
 
-
-              {/* EXPERIENCE */}
               <select
                 required
                 name="experience"
@@ -786,8 +736,6 @@ export default function Home() {
 
               </select>
 
-
-              {/* APPROACH */}
               <select
                 required
                 name="approach"
@@ -821,8 +769,6 @@ export default function Home() {
 
               </select>
 
-
-              {/* CONSULTATION */}
               <select
                 required
                 name="consultation"
@@ -848,19 +794,13 @@ export default function Home() {
 
               </select>
 
-
-              {/* SUBMIT */}
               <button
                 type="submit"
                 className="mt-2 flex w-full cursor-pointer items-center justify-center gap-3 rounded-xl bg-[#1769D1] px-6 py-4 text-[17px] font-bold text-white transition hover:bg-[#0D58B7]"
               >
-
                 Submit
-
                 <ArrowRight size={20} />
-
               </button>
-
 
               <p className="pt-2 text-center text-xs leading-5 text-[#6B7A90]">
                 By submitting your details, you agree to be contacted by the
